@@ -36,3 +36,57 @@ header #title {
     color: white;
     padding: 15px;
 }
+
+/* Main */
+.container {
+    margin: 50px auto;
+    width: 80%;
+}
+
+#top {
+    display: flex;
+    justify-content: space-between;
+}
+
+#right {
+    display: flex;
+}
+
+/* Button Style */
+.btn {
+    border: 0px;
+    padding: 8px 15px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-main {
+    background-color: var(--main-color);
+}
+
+/* Icons style */
+.bi-plus-lg,
+.bi-funnel-fill {
+    font-size: 18px;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+/* Input Search */
+.search {
+    border: 1px solid rgb(202, 202, 202);
+    margin-right: 15px;
+    border-radius: 5px;
+    padding: 0 10px;
+    line-height: 2rem;
+    width: 250px;
+}
+
+.search .input-search {
+    border: 0px;
+    padding: 0 5px;
+    cursor: text;
+}
