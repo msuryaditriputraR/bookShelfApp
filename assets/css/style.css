@@ -40,16 +40,13 @@ header #title {
 /* Main */
 .container {
     margin: 50px auto;
-    width: 80%;
+    width: 90%;
 }
 
 #top {
     display: flex;
     justify-content: space-between;
-}
-
-#right {
-    display: flex;
+    padding: 0 5vw;
 }
 
 /* Button Style */
@@ -67,7 +64,31 @@ header #title {
     background-color: var(--main-color);
 }
 
+.btn-yellow {
+    background-color: var(--yellow-color);
+}
+
+.btn-green {
+    background-color: var(--green-color);
+}
+
+.btn-red {
+    background-color: var(--red-color);
+}
+
+.btn-grey {
+    background-color: var(--grey-color);
+}
+
+.add-btn-modal {
+    box-shadow: 0px 0px 5px rgba(81, 0, 210, .3);
+}
+
 /* Icons style */
+.bi {
+    font-size: 16px;
+}
+
 .bi-plus-lg,
 .bi-funnel-fill {
     font-size: 18px;
@@ -75,18 +96,69 @@ header #title {
     margin-right: 6px;
 }
 
+
 /* Input Search */
 .search {
     border: 1px solid rgb(202, 202, 202);
-    margin-right: 15px;
     border-radius: 5px;
     padding: 0 10px;
     line-height: 2rem;
     width: 250px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, .2);
+
 }
 
 .search .input-search {
     border: 0px;
     padding: 0 5px;
     cursor: text;
+}
+
+/* Main Content */
+#main-content {
+    margin: 40px 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+/* Shelf */
+.shelfbook {
+    border-radius: 10px;
+    padding: 20px 30px;
+    flex-basis: 45%;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, .2);
+}
+
+.header-shelf {
+    text-align: center;
+}
+
+.header-shelf h2 {
+    text-transform: capitalize;
+    color: var(--main-color);
+}
+
+.container-list {
+    margin: 25px 0 15px;
+}
+
+.list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgb(202, 202, 202);
+}
+
+.list:not(:first-child) {
+    margin-top: 15px;
+}
+
+.title-book {
+    color: #005aff;
+}
+
+.subtitle-book {
+    color: #5e5e5e;
+    font-weight: 300;
 }
