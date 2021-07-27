@@ -52,13 +52,21 @@ const addBook = () => {
     isCompleted.checked = false;
 };
 
-// const changeBookToCompleted = cardBookElement => {
-//     updateCardBook(cardBookElement, { isComplete: true });
-// };
+const changeStatusBook = (listBook, status) => {
+    const title = listBook.querySelector('.title-book').innerText;
+    const subTitle = listBook.querySelector('.subtitle-book').innerText;
+    const [author, year] = subTitle.split(' | ');
 
-// const changeBookToUnCompleted = cardBookElement => {
-//     updateCardBook(cardBookElement, { isComplete: false });
-// };
+    const newList = makeList({ title, author, year, isComplete: status });
+
+    status ? finishShelf.append(newList) : unFinishShelf.append(newList);
+
+    deleteBook(listBook);
+};
+
+const deleteBook = listBook => {
+    listBook.remove();
+};
 
 const validationInput = () => {
     const modalContent = document.querySelector('.main-content');
@@ -168,9 +176,9 @@ const loadBook = () => {
 
 export {
     addBook,
+    deleteBook,
     // editBook,
-    // changeBookToCompleted,
-    // changeBookToUnCompleted,
+    changeStatusBook,
     // getValueInputModal,
     validationInput,
     makeErrorMessage,

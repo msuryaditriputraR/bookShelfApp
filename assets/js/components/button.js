@@ -1,7 +1,6 @@
 import {
     makeErrorMessage,
-    //     changeBookToCompleted,
-    //     changeBookToUnCompleted,
+    changeStatusBook,
     addBook,
     //     getValueInputModal,
     validationInput
@@ -10,11 +9,13 @@ import {
 import { toggleModal } from './modal.js';
 
 // NOTE: Membuat abstrak Button
-const createButton = ({ className, eventListener, icon, idBtn }) => {
+const createButton = ({ className, eventListener, icon, idBtn, title }) => {
     const button = document.createElement('button');
     button.classList.add('btn', ...className);
 
     if (idBtn) button.setAttribute('id', idBtn);
+
+    if (title) button.setAttribute('title', title);
 
     button.innerHTML = icon;
     button.addEventListener('click', event => {
@@ -24,19 +25,23 @@ const createButton = ({ className, eventListener, icon, idBtn }) => {
     return button;
 };
 
-//
-//         <button class="btn btn-red">
-//
-//         </button>
-
 // NOTE: Membuat button Finish
 const finishButton = () =>
     createButton({
         className: ['btn-green', 'mr-3'],
         eventListener: event => {
-            // changeBookToCompleted(event.target.parentElement.parentElement);
+            let list;
+            if (event.target.matches('button')) {
+                list = event.target.parentElement.parentElement;
+            }
+            if (event.target.matches('i')) {
+                list = event.target.parentElement.parentElement.parentElement;
+            }
+
+            changeStatusBook(list, true);
         },
-        icon: '<i class="bi bi-check-lg"></i>'
+        icon: '<i class="bi bi-check-lg"></i>',
+        title: 'Make Complete'
     });
 
 // NOTE: Membuat button Delete
@@ -48,16 +53,27 @@ const deleteButton = () =>
             // if (isDelete)
             // deleteCardBook(event.target.parentElement.parentElement);
         },
-        icon: '<i class="bi bi-trash"></i>'
+        icon: '<i class="bi bi-trash"></i>',
+        title: 'Delete Book'
     });
 
 // NOTE: Membuat button unfinish
 const unFinishButton = () =>
     createButton({
         className: ['btn-grey', 'mr-3'],
-        eventListener: event => {},
-        // changeBookToUnCompleted(event.target.parentNode.parentNode)
-        icon: ' <i class="bi bi-dash-lg"></i>'
+        eventListener: event => {
+            let list;
+            if (event.target.matches('button')) {
+                list = event.target.parentElement.parentElement;
+            }
+            if (event.target.matches('i')) {
+                list = event.target.parentElement.parentElement.parentElement;
+            }
+
+            changeStatusBook(list, false);
+        },
+        icon: ' <i class="bi bi-dash-lg"></i>',
+        title: 'Make UnComplete'
     });
 
 //NoTE: Membuat button edit
@@ -68,7 +84,8 @@ const editButton = () =>
             // getValueInputModal(event.target.parentNode.parentNode);
             toggleModal();
         },
-        icon: '<i class="bi bi-pencil-fill"></i>'
+        icon: '<i class="bi bi-pencil-fill"></i>',
+        title: 'Edit Book'
     });
 
 //NOTE: Membuat button add book pada modal
@@ -91,7 +108,7 @@ const addNewBookBtn = () =>
 const editFormModalBtn = cardElement =>
     createButton({
         className: ['btn-yellow'],
-        textBtn: 'Edit Book',
+        icon: 'Edit Book',
         eventListener: () => {
             if (validationInput()) {
                 // editBook(cardElement);
