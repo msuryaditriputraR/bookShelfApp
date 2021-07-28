@@ -6,6 +6,7 @@ import {
     finishButton,
     unFinishButton
 } from './button.js';
+import value from './search.js';
 
 const makeList = ({ title, author, year, isComplete }) => {
     const titleBook = document.createElement('h3');
@@ -37,13 +38,19 @@ const makeList = ({ title, author, year, isComplete }) => {
 const updateListBook = listBookElement => {
     const title = listBookElement.querySelector('.title-book');
     const subTitle = listBookElement.querySelector('.subtitle-book');
+    const shelf = listBookElement.parentElement.parentElement;
+    const isUnFinishBook = shelf.id.includes('unfinish');
 
     const newList = findBook(listBookElement[BookId]);
 
     title.innerText = newList.title;
     subTitle.innerText = `${newList.author} | ${newList.year}`;
 
-    changeStatusBook(listBookElement, newList.isComplete);
+    // NOTE: so that the search value continues when change status
+    showListSearch(value[0] || '');
+
+    if (isUnFinishBook == newList.isComplete)
+        changeStatusBook(listBookElement, newList.isComplete);
 };
 
 const showListSearch = keyword => {
