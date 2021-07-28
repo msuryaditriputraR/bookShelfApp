@@ -141,7 +141,7 @@ header #title {
 /* Shelf */
 .shelfbook {
     border-radius: 10px;
-    padding: 20px 30px;
+    padding: 20px 45px;
     flex-basis: 45%;
     box-shadow: 0px 0px 6px rgba(0, 0, 0, .2);
     height: fit-content;
