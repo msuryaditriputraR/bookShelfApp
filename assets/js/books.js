@@ -1,5 +1,5 @@
-// import { editBookModal, formModal } from './components/modal.js';
-import makeList from './components/list.js';
+import { editBookModal, formModal } from './components/modal.js';
+import { makeList, updateListBook } from './components/list.js';
 import {
     books,
     composeTodoObject,
@@ -52,22 +52,28 @@ const addBook = () => {
     isCompleted.checked = false;
 };
 
-const changeStatusBook = (listBook, status) => {
-    const title = listBook.querySelector('.title-book').innerText;
-    const subTitle = listBook.querySelector('.subtitle-book').innerText;
+const changeStatusBook = (listBookElement, status) => {
+    const title = listBookElement.querySelector('.title-book').innerText;
+    const subTitle = listBookElement.querySelector('.subtitle-book').innerText;
     const [author, year] = subTitle.split(' | ');
 
     const newList = makeList({ title, author, year, isComplete: status });
 
+    const bookObject = composeTodoObject(title, author, year, status);
+
+    books.push(bookObject);
+    newList[BookId] = bookObject.id;
+    updateDataToStorage();
+
     status ? finishShelf.append(newList) : unFinishShelf.append(newList);
 
-    deleteBook(listBook);
+    deleteBook(listBookElement);
 };
 
-const deleteBook = listBook => {
-    const bookIndex = findBookIndex(listBook[BookId]);
+const deleteBook = listBookElement => {
+    const bookIndex = findBookIndex(listBookElement[BookId]);
     books.splice(bookIndex, 1);
-    listBook.remove();
+    listBookElement.remove();
     updateDataToStorage();
 };
 
@@ -107,59 +113,60 @@ const makeErrorMessage = (message, element) => {
     error.classList.replace('d-none', 'd-block');
 };
 
-// const getValueInputModal = cardBookElement => {
-//     const book = findBook(cardBookElement[BookId]);
+const getValueInputModal = listBookElement => {
+    const book = findBook(listBookElement[BookId]);
 
-//     const titleValue = book.title;
-//     const authorValue = book.author;
-//     const yearValue = book.year;
-//     const isComplete = book.isComplete;
+    const titleValue = book.title;
+    const authorValue = book.author;
+    const yearValue = book.year;
+    const isComplete = book.isComplete;
 
-//     const valueObject = {
-//         titleValue,
-//         authorValue,
-//         yearValue
-//     };
+    const valueObject = {
+        titleValue,
+        authorValue,
+        yearValue
+    };
 
-//     const valueFormModal = [...formModal];
+    const valueFormModal = [...formModal];
 
-//     const arrValueFormModal = valueFormModal.map((input, index) => {
-//         let newInput = Object.assign({}, input);
+    const arrValueFormModal = valueFormModal.map((input, index) => {
+        let newInput = Object.assign({}, input);
 
-//         if (input.id === 'book-iscompleted') {
-//             newInput.isChecked = isComplete;
-//         } else {
-//             for (const [i, val] of Object.keys(valueObject).entries()) {
-//                 if (index === i) {
-//                     newInput.value = valueObject[val];
-//                 }
-//             }
-//         }
+        if (input.id === 'book-iscompleted') {
+            newInput.isChecked = isComplete;
+        } else {
+            for (const [i, val] of Object.keys(valueObject).entries()) {
+                if (index === i) {
+                    newInput.value = valueObject[val];
+                }
+            }
+        }
 
-//         return newInput;
-//     });
+        return newInput;
+    });
 
-//     editBookModal(arrValueFormModal, 'Edit Book', {
-//         isEdit: true,
-//         cardElement: cardBookElement
-//     });
-// };
+    editBookModal(arrValueFormModal, 'Edit Book', {
+        isEdit: true,
+        listBookElement
+    });
+};
 
-// const editBook = cardElement => {
-//     const title = document.getElementById('book-title').value;
-//     const author = document.getElementById('book-author').value;
-//     const year = document.getElementById('book-year').value;
-//     const isComplete = document.getElementById('book-iscompleted').checked;
+const editBook = listBookElement => {
+    const title = document.getElementById('book-title').value;
+    const author = document.getElementById('book-author').value;
+    const year = document.getElementById('book-year').value;
+    const isComplete = document.getElementById('book-iscompleted').checked;
 
-//     const book = findBook(cardElement[BookId]);
+    const book = findBook(listBookElement[BookId]);
 
-//     book.title = title;
-//     book.author = author;
-//     book.year = year;
+    book.title = title;
+    book.author = author;
+    book.year = year;
+    book.isComplete = isComplete;
 
-//     updateDataToStorage();
-//     updateCardBook(cardElement, { isComplete });
-// };
+    updateDataToStorage();
+    updateListBook(listBookElement);
+};
 
 const loadBook = () => {
     for (let book of books) {
@@ -180,9 +187,9 @@ const loadBook = () => {
 export {
     addBook,
     deleteBook,
-    // editBook,
+    editBook,
     changeStatusBook,
-    // getValueInputModal,
+    getValueInputModal,
     validationInput,
     makeErrorMessage,
     loadBook,

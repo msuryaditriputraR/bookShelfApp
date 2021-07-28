@@ -8,7 +8,7 @@ const formModal = [
 ];
 
 // NOTE: make an abstraction of modal
-const makeModal = (inputModal, textHeader, { isEdit, cardElement }) => {
+const makeModal = (inputModal, textHeader, { isEdit, listBookElement }) => {
     const headerContent = document.createElement('div');
     headerContent.classList.add('header-content');
 
@@ -50,7 +50,7 @@ const makeModal = (inputModal, textHeader, { isEdit, cardElement }) => {
 
     let btnModal;
     isEdit
-        ? (btnModal = editFormModalBtn(cardElement))
+        ? (btnModal = editFormModalBtn(listBookElement))
         : (btnModal = addNewBookBtn());
 
     footerContent.append(btnModal);

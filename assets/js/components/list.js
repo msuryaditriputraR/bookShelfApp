@@ -1,3 +1,5 @@
+import { BookId, changeStatusBook } from '../books.js';
+import { findBook } from '../data.js';
 import {
     deleteButton,
     editButton,
@@ -32,4 +34,16 @@ const makeList = ({ title, author, year, isComplete }) => {
     return list;
 };
 
-export default makeList;
+const updateListBook = listBookElement => {
+    const title = listBookElement.querySelector('.title-book');
+    const subTitle = listBookElement.querySelector('.subtitle-book');
+
+    const newList = findBook(listBookElement[BookId]);
+
+    title.innerText = newList.title;
+    subTitle.innerText = `${newList.author} | ${newList.year}`;
+
+    changeStatusBook(listBookElement, newList.isComplete);
+};
+
+export { makeList, updateListBook };

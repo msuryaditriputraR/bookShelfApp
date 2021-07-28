@@ -3,9 +3,9 @@ import {
     changeStatusBook,
     addBook,
     deleteBook,
-    //     getValueInputModal,
-    validationInput
-    // editBook
+    getValueInputModal,
+    validationInput,
+    editBook
 } from './../books.js';
 import { toggleModal } from './modal.js';
 
@@ -84,7 +84,8 @@ const editButton = () =>
     createButton({
         className: ['btn-yellow', 'ml-3', 'mr-3'],
         eventListener: event => {
-            // getValueInputModal(event.target.parentNode.parentNode);
+            const list = getList(event);
+            getValueInputModal(list);
             toggleModal();
         },
         icon: '<i class="bi bi-pencil-fill"></i>',
@@ -108,13 +109,13 @@ const addNewBookBtn = () =>
         }
     });
 
-const editFormModalBtn = cardElement =>
+const editFormModalBtn = listBookElement =>
     createButton({
         className: ['btn-yellow'],
         icon: 'Edit Book',
         eventListener: () => {
             if (validationInput()) {
-                // editBook(cardElement);
+                editBook(listBookElement);
                 toggleModal();
             }
         }
