@@ -4,6 +4,7 @@ import {
     books,
     composeTodoObject,
     findBook,
+    findBookIndex,
     updateDataToStorage
 } from './data.js';
 
@@ -28,7 +29,6 @@ const addBook = () => {
         isComplete: isCompleted.checked
     });
 
-    console.log(cardBook);
     // NOTE: add book to local storage
     const bookObject = composeTodoObject(
         title.value,
@@ -65,7 +65,10 @@ const changeStatusBook = (listBook, status) => {
 };
 
 const deleteBook = listBook => {
+    const bookIndex = findBookIndex(listBook[BookId]);
+    books.splice(bookIndex, 1);
     listBook.remove();
+    updateDataToStorage();
 };
 
 const validationInput = () => {

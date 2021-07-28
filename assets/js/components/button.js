@@ -2,6 +2,7 @@ import {
     makeErrorMessage,
     changeStatusBook,
     addBook,
+    deleteBook,
     //     getValueInputModal,
     validationInput
     // editBook
@@ -25,18 +26,24 @@ const createButton = ({ className, eventListener, icon, idBtn, title }) => {
     return button;
 };
 
+const getList = event => {
+    let list;
+    if (event.target.matches('button')) {
+        list = event.target.parentElement.parentElement;
+    }
+    if (event.target.matches('i')) {
+        list = event.target.parentElement.parentElement.parentElement;
+    }
+
+    return list;
+};
+
 // NOTE: Membuat button Finish
 const finishButton = () =>
     createButton({
         className: ['btn-green', 'mr-3'],
         eventListener: event => {
-            let list;
-            if (event.target.matches('button')) {
-                list = event.target.parentElement.parentElement;
-            }
-            if (event.target.matches('i')) {
-                list = event.target.parentElement.parentElement.parentElement;
-            }
+            const list = getList(event);
 
             changeStatusBook(list, true);
         },
@@ -49,9 +56,11 @@ const deleteButton = () =>
     createButton({
         className: ['btn-red', 'ml-3'],
         eventListener: event => {
-            // const isDelete = confirm('Are you Sure delete this book?');
-            // if (isDelete)
-            // deleteCardBook(event.target.parentElement.parentElement);
+            const isDelete = confirm('Are you Sure delete this book?');
+            if (isDelete) {
+                const list = getList(event);
+                deleteBook(list);
+            }
         },
         icon: '<i class="bi bi-trash"></i>',
         title: 'Delete Book'
@@ -62,13 +71,7 @@ const unFinishButton = () =>
     createButton({
         className: ['btn-grey', 'mr-3'],
         eventListener: event => {
-            let list;
-            if (event.target.matches('button')) {
-                list = event.target.parentElement.parentElement;
-            }
-            if (event.target.matches('i')) {
-                list = event.target.parentElement.parentElement.parentElement;
-            }
+            const list = getList(event);
 
             changeStatusBook(list, false);
         },

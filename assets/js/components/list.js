@@ -6,7 +6,6 @@ import {
 } from './button.js';
 
 const makeList = ({ title, author, year, isComplete }) => {
-    console.log(title);
     const titleBook = document.createElement('h3');
     titleBook.innerText = title;
     titleBook.classList.add('title-book');
