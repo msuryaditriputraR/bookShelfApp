@@ -1,3 +1,5 @@
+import { showListSearch } from './list.js';
+
 const searchBox = document.querySelector('.input-search');
 let value = [];
 

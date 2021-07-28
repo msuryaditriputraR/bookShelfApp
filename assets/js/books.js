@@ -1,5 +1,5 @@
 import { editBookModal, formModal } from './components/modal.js';
-import { makeList, updateListBook } from './components/list.js';
+import { makeList, showListSearch, updateListBook } from './components/list.js';
 import {
     books,
     composeTodoObject,
@@ -7,6 +7,7 @@ import {
     findBookIndex,
     updateDataToStorage
 } from './data.js';
+import value from './components/search.js';
 
 const BookId = 'itemId';
 const finishShelf = document
@@ -45,6 +46,9 @@ const addBook = () => {
         ? finishShelf.append(cardBook)
         : unFinishShelf.append(cardBook);
 
+    // NOTE: so that the search value continues when add a book
+    showListSearch(value[0] || '');
+
     // NOTE: reset value input when add Button clicked
     title.value = '';
     author.value = '';
@@ -66,6 +70,9 @@ const changeStatusBook = (listBookElement, status) => {
     updateDataToStorage();
 
     status ? finishShelf.append(newList) : unFinishShelf.append(newList);
+
+    // NOTE: so that the search value continues when change status
+    showListSearch(value[0] || '');
 
     deleteBook(listBookElement);
 };

@@ -46,4 +46,34 @@ const updateListBook = listBookElement => {
     changeStatusBook(listBookElement, newList.isComplete);
 };
 
-export { makeList, updateListBook };
+const showListSearch = keyword => {
+    const regex = new RegExp(keyword, 'ig');
+    const lists = document.querySelectorAll('.list');
+    lists.forEach(list => {
+        const nameBook = list.querySelector('.title-book');
+        const nameBookText = nameBook.innerText.toLowerCase();
+        const subtitle = list.querySelector('.subtitle-book');
+        const subtitleText = subtitle.innerText.toLowerCase();
+
+        const macthKeyword = `<span class='hl'>${keyword.toLowerCase()}</span>`;
+        if (nameBookText.match(regex) || subtitleText.match(regex))
+            list.style.display = 'flex';
+        else list.style.display = 'none';
+
+        if (nameBookText.match(regex) && keyword) {
+            const name = nameBookText.replace(regex, macthKeyword);
+            nameBook.innerHTML = name;
+        } else {
+            nameBook.innerHTML = nameBookText;
+        }
+
+        if (subtitleText.match(regex) && keyword) {
+            const textSubtitle = subtitleText.replace(regex, macthKeyword);
+            subtitle.innerHTML = textSubtitle;
+        } else {
+            subtitle.innerHTML = subtitleText;
+        }
+    });
+};
+
+export { makeList, updateListBook, showListSearch };
